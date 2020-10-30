@@ -103,5 +103,14 @@ int main(void) {
   return 0;
 }
 
+/*
+Pruebas: 
+
+El programa de minishell después de haberse ejecutado se puede probar de la siguiente manera: 
+
+cat p4.c>salida.txt
+cat p4.c|wc -l
+wc p4.c
+*/
 
 

@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
  if (pid == 0){                                                                                                                                                                                                                                        // The child process will execute wc.
   //Esto es ejecutado por el hijo
   close(fd[WRITE]);//Se cierra el descriptor de escritura del pipe
-  dup2(fd[READ], STDIN_FILENO); //Permite leer la salida que retorna el padre
+  dup2(fd[READ], STDIN_FILENO); //Apunta al descriptor que devuelve el pipe 
   char *cm[3]; 
   cm[2] = NULL;
   // se hace uso de la funcion split para separar por palabras el comando y los argumentos
@@ -64,10 +64,20 @@ int main(int argc, char* argv[]) {
   //Esto es ejecutado por el padre
   close(fd[READ]); // se cierra el descriptor de lectura del pipe
   dup2(fd[WRITE], STDOUT_FILENO); //Redirecciona la salida de escritura al pipe
-  char *comand[3];
+  char *comand[3]; 
   comand[2] = NULL;
   split(argv[1], comand);
   //Se ejecuta el comando con los argumentos
   execvp(comand[0], comand);
  }
 }
+
+/*
+Pruebas: 
+
+El programa se puede probar de la siguiente manera: 
+
+./first "cat p4.c" "wc"
+./first "cat p4.c" "wc -l"
+./first "cat p4.c" "wc -w"
+*/
